@@ -13,8 +13,17 @@ fn main() {
         io::stdin()
             .read_line(&mut input)
             .expect("Failed to read line!");
-        let nums: Vec<usize> = input.split(',').map(|string_val|
-            string_val.trim().parse().expect("Please type numbers!")).collect();
+        let parsed_result: Result<Vec<usize>, _> = input.split(',').map(|string_val|
+            string_val.trim().parse::<usize>()).collect();
+        
+        let nums = match parsed_result {
+            Ok(list) => list,
+            Err(_) => {
+                println!("Error, please input numbers serperated by a comma");
+                continue;
+            },
+        };
+        
         if nums.len() < 2 {
             println!("Please type at least 2 numbers!");
             continue;
