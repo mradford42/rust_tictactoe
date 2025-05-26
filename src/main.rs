@@ -20,23 +20,19 @@ fn main() {
             continue;
         }
 
-        let play_succeeded;
-        match game.play_turn(nums[0], nums[1]) {
-            Ok(result) => play_succeeded = result,
+        let play_succeeded = match game.play_turn(nums[0], nums[1]) {
+            Ok(result) => result,
             Err(e) => {
                 println!("{}", e);
                 continue;
             },
-        }
+        };
 
         game.print_board();
         if play_succeeded {
-            match game.check_for_winner() {
-                Some(player) => {
-                    println!("Congratulations! Player {player} wins!");
-                    exit(0);
-                },
-                None => (),
+            if let Some(player) = game.check_for_winner() {
+                println!("Congratulations! Player {player} wins!");
+                exit(0);
             }
         }
         else {

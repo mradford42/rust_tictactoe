@@ -71,6 +71,12 @@ pub struct Game {
     current_player: char,
 }
 
+impl Default for Game {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl Game {
     /// Create a new Game object
     pub fn new() -> Game {
