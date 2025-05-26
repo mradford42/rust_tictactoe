@@ -1,3 +1,5 @@
+use std::fmt;
+
 /// Struct to hold the 3x3 board state
 struct Board {
     board: [char; 9],
@@ -18,6 +20,19 @@ const WIN_PATTERNS: [(usize, usize, usize); 8] = [
 // Height and Width of board
 const HEIGHT: usize = 3;
 const WIDTH: usize = 3;
+
+impl fmt::Display for Board {
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
+        let mut string = String::new();
+        for (i, space) in self.board.iter().enumerate() {
+            string.push_str(format!("| {space} ").as_str());
+            if (i+1)%3 == 0 {
+                string.push_str("|\n");
+            }
+        }
+        write!(f, "{}", string)
+    }
+}
 
 impl Board {
     /// Create a new Board object
@@ -46,18 +61,6 @@ impl Board {
             }
         }
         None
-    }
-
-    /// Returns an ASCII representation of the Board
-    fn to_string(&self) -> String {
-        let mut string = String::new();
-        for (i, space) in self.board.iter().enumerate() {
-            string.push_str(format!("| {space} ").as_str());
-            if (i+1)%3 == 0 {
-                string.push_str("|\n");
-            }
-        }
-        string
     }
 
 }
@@ -110,7 +113,7 @@ impl Game {
 
     /// Print the ASCII board to the screen
     pub fn print_board(&self) {
-        println!("{}", self.board.to_string());
+        println!("{}", self.board);
     }
 }
 
